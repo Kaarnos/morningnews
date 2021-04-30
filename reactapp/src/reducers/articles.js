@@ -12,7 +12,9 @@ export default function(wishList = [], action){
         }
 
         if(!findArticle){
-            wishListCopy.push(action.articleLiked)
+            wishListCopy.push(action.articleLiked);
+            
+            console.log('articleLiked', action.articleLiked);
         }
         
         return wishListCopy

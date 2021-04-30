@@ -19,7 +19,7 @@ function ScreenArticlesBySource(props) {
 
   useEffect(() => {
     const findArticles = async() => {
-      const data = await fetch(`https://newsapi.org/v2/top-headlines?sources=${id}&apiKey=b32c8b844d1243b1a7998d8228910f50`)
+      const data = await fetch(`https://newsapi.org/v2/top-headlines?sources=${id}&apiKey=034890f10d404fa4b6f391d59bde530b`)
       const body = await data.json()
       console.log(body)
       setArticleList(body.articles) 
@@ -28,18 +28,33 @@ function ScreenArticlesBySource(props) {
     findArticles()    
   },[])
 
+
+  var handleClickLike = async (article) => {
+
+    var articleFound = props.wishList.find((element) => element.title === article.title);
+    if (articleFound === undefined) {
+      const data = await fetch('/save-article', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `title=${article.title}&description=${article.description}&content=${article.content}&img=${article.urlToImage}&userToken=${props.token}`
+      })
+      const body = await data.json();
+  
+      props.addToWishList(article);
+    }   
+  }
+
+  // MODAL
   var showModal = (title, content) => {
     setVisible(true)
     setTitle(title)
     setContent(content)
 
   }
-
   var handleOk = e => {
     console.log(e)
     setVisible(false)
   }
-
   var handleCancel = e => {
     console.log(e)
     setVisible(false)
@@ -72,7 +87,7 @@ function ScreenArticlesBySource(props) {
                   }
                   actions={[
                       <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title,article.content)} />,
-                      <Icon type="like" key="ellipsis" onClick={()=> {props.addToWishList(article)}} />
+                      <Icon type="like" key="ellipsis" onClick={()=> {handleClickLike(article)}} />
                   ]}
                   >
 
@@ -117,7 +132,14 @@ function mapDispatchToProps(dispatch){
   }
 }
 
+function mapStateToProps(state){
+  return {
+    token: state.token,
+    wishList: state.wishList
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ScreenArticlesBySource)

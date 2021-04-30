@@ -14,24 +14,29 @@ function ScreenMyArticles(props) {
   const [langFiltre, setLangFiltre] = useState('')
 
 
+  var handleClickDelete = async function (title) {
+    const data = await fetch(`/delete-article/${title}/${props.token}`, {
+      method: 'DELETE'
+    })
+    const body = await data.json();
 
+    props.deleteToWishList(title);
+  }
+
+  // MODAL
   var showModal = (title, content) => {
     setVisible(true)
     setTitle(title)
     setContent(content)
-
   }
-
   var handleOk = e => {
     console.log(e)
     setVisible(false)
   }
-
   var handleCancel = e => {
     console.log(e)
     setVisible(false)
   }
-
   var noArticles
   if(props.myArticles == 0){
     noArticles = <div style={{marginTop:"30px"}}>No Articles</div>
@@ -68,7 +73,7 @@ function ScreenMyArticles(props) {
                     }
                     actions={[
                         <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title,article.content)} />,
-                        <Icon type="delete" key="ellipsis" onClick={() => props.deleteToWishList(article.title)} />
+                        <Icon type="delete" key="ellipsis" onClick={() => handleClickDelete(article.title)} />
                     ]}
                     >
 
@@ -106,7 +111,10 @@ function ScreenMyArticles(props) {
 }
 
 function mapStateToProps(state){
-  return {myArticles: state.wishList}
+  return {
+    myArticles: state.wishList,
+    token: state.token
+  }
 }
 
 function mapDispatchToProps(dispatch){

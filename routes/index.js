@@ -4,7 +4,41 @@ var router = express.Router();
 var uid2 = require('uid2')
 var bcrypt = require('bcrypt');
 
-var userModel = require('../models/users')
+var userModel = require('../models/users');
+var WishlistsModel = require('../models/wishlists');
+
+
+router.post('/save-article', async function (req, res, next) {
+  console.log(req.body);
+  var user = await userModel.findOne({token: req.body.userToken});
+
+  var newArticle = new WishlistsModel({
+    title: req.body.title,
+    description: req.body.desciption,
+    content: req.body.content,
+    img: req.body.img,
+    userId: user._id
+  });
+
+  console.log('newArticle', newArticle);
+  await newArticle.save();
+
+  res.json(true);
+})
+
+router.delete('/delete-article/:title/:token', async function (req, res, next) {
+  console.log('params',req.params);
+
+  var user = await userModel.findOne({token: req.params.token});
+  var article = await WishlistsModel.deleteOne({
+    userId: user._id,
+    title: req.params.title
+    });
+
+  console.log(article);
+  
+  res.json(true);
+})
 
 
 router.post('/sign-up', async function(req,res,next){

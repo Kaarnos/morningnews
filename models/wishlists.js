@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const wishlistsSchema = mongoose.Schema({
   title: String,
-  desciption: String,
+  description: String,
   content: String,
-  img: String,
+  urlToImage: String,
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users'

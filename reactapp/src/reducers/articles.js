@@ -33,6 +33,10 @@ export default function(wishList = [], action){
 
         return wishListCopy
         
+    } else if (action.type == 'initiate') {
+      var wishListCopy = [...wishList];
+      wishListCopy = action.wishlist;
+      return wishListCopy;
     } else {
         return wishList
     }

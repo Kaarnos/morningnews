@@ -14,9 +14,9 @@ router.post('/save-article', async function (req, res, next) {
 
   var newArticle = new WishlistsModel({
     title: req.body.title,
-    description: req.body.desciption,
+    description: req.body.description,
     content: req.body.content,
-    img: req.body.img,
+    urlToImage: req.body.img,
     userId: user._id
   });
 
@@ -38,6 +38,13 @@ router.delete('/delete-article/:title/:token', async function (req, res, next) {
   console.log(article);
   
   res.json(true);
+})
+
+router.post('/initiate-wishlist', async function (req, res, next) {
+  var user = await userModel.findOne({token: req.body.token})
+  var wishlist = await WishlistsModel.find({userId: user._id})
+  console.log(wishlist);
+  res.json(wishlist);
 })
 
 

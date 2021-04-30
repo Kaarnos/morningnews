@@ -15,12 +15,17 @@ function ScreenMyArticles(props) {
 
 
   useEffect(() => {
-    const initiateWishlist = async() => {
-      const data = await fetch(`/initiate-wishlist`);
-      const body = await data.json()
-
+    const getWishlist = async() => {
+      const data = await fetch(`/initiate-wishlist`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `token=${props.token}`
+      });
+      const wishlist = await data.json();
+      console.log('wishlist', wishlist);
+      props.initiateWishlist(wishlist);
     }
-    initiateWishlist();
+    getWishlist();
   }, [])
 
   var handleClickDelete = async function (title) {
@@ -131,6 +136,12 @@ function mapDispatchToProps(dispatch){
     deleteToWishList: function(articleTitle){
       dispatch({type: 'deleteArticle',
         title: articleTitle
+      })
+    },
+    initiateWishlist: function(wishlist){
+      dispatch(
+        {type: 'initiate',
+        wishlist: wishlist
       })
     }
   }

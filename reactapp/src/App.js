@@ -14,19 +14,8 @@ import ScreenHome from './ScreenHome';
 import ScreenArticlesBySource from './ScreenArticlesBySource'
 import ScreenMyArticles from './ScreenMyArticles'
 import ScreenSource from './ScreenSource'
-// import {connect} from 'react-redux'
 
 const store = createStore(combineReducers({wishList, token, selectedLang}))
-
-// useEffect(() => {
-//   const initiateWishlist = async() => {
-//     const data = await fetch(`/initiate-wishlist`);
-//     const body = await data.json()
-
-//   }
-//   initiateWishlist();
-// }, [])
-
 
 function App() {
   return (

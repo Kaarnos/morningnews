@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import { Card, Icon, Modal} from 'antd';
 import Nav from './Nav'
@@ -13,6 +13,15 @@ function ScreenMyArticles(props) {
   const [content, setContent] = useState('')
   const [langFiltre, setLangFiltre] = useState('')
 
+
+  useEffect(() => {
+    const initiateWishlist = async() => {
+      const data = await fetch(`/initiate-wishlist`);
+      const body = await data.json()
+
+    }
+    initiateWishlist();
+  }, [])
 
   var handleClickDelete = async function (title) {
     const data = await fetch(`/delete-article/${title}/${props.token}`, {

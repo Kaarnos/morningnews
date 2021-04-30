@@ -92,4 +92,30 @@ router.post('/sign-in', async function(req,res,next){
 
 })
 
+      // Route_lang_TODO_ROAD_USER
+router.get('/user-lang', async function(req, res,next) {
+  var lang = null 
+  var user = await userModel.findOne({token: req.body.token})
+  
+  if(user != null){         // Check
+    lang = user.lang
+  }
+
+  res.json({lang})
+})
+
+router.post('user-lang', async function(req, res,next)){
+  var lang = null  //false
+  var user = await userModel.updateOne({token: req.body.token}, {lang:req.body.lang})
+
+  if(user != null){
+    result = true
+  }
+
+  res.json({result})
+
+}
+
+
+
 module.exports = router;

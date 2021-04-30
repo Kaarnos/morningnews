@@ -30,25 +30,27 @@ function ScreenSource(props) {
   }, [selectedLang])
 
 
-        // Save_BDD_lang
+        // Save_BDD_lang_______
 
-  var langChange = async (lang) => {
+  var changeLang = async (lang) => {
     setSelectedLang(lang)
 
-    const reqLanguage = await fetch('/user-lang', {
+    const reqLang = await fetch('/user-lang', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: 'lang=${language}&tokken={props.token}'
+      body: `lang=${lang}&tokken=${props.token}`
     })
   }
+
+
 
   return (
     <div>
         <Nav/>
        
        <div style={{display:'flex', justifyContent:'center', alignItems:'center'}} className="Banner">
-          <img style={{width:'40px', margin:'10px',cursor:'pointer'}} src='/images/fr.png' onClick={() => setSelectedLang('fr')} />
-          <img style={{width:'40px', margin:'10px',cursor:'pointer'}} src='/images/uk.png' onClick={() => setSelectedLang('en')} /> 
+          <img style={{width:'40px', margin:'10px',cursor:'pointer'}} src='/images/fr.png' onClick={() => changeLang('fr')} />
+          <img style={{width:'40px', margin:'10px',cursor:'pointer'}} src='/images/uk.png' onClick={() => changeLang('en')} /> 
         </div>
 
        <div className="HomeThemes">

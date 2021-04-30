@@ -29,6 +29,19 @@ function ScreenSource(props) {
     APIResultsLoading()
   }, [selectedLang])
 
+
+        // Save_BDD_lang
+
+  var langChange = async (lang) => {
+    setSelectedLang(lang)
+
+    const reqLanguage = await fetch('/user-lang', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: 'lang=${language}&tokken={props.token}'
+    })
+  }
+
   return (
     <div>
         <Nav/>

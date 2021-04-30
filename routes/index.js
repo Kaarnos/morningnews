@@ -138,7 +138,7 @@ router.get('/user-lang', async function(req, res,next) {
   res.json({lang})
 })
 
-router.post('user-lang', async function(req, res,next)){
+router.post('user-lang', async function(req, res,next){
   var lang = null  //false
   var user = await userModel.updateOne({token: req.body.token}, {lang:req.body.lang})
 
@@ -148,7 +148,7 @@ router.post('user-lang', async function(req, res,next)){
 
   res.json({result})
 
-}
+})
 
 
 
